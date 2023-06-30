@@ -1,5 +1,5 @@
 
-export const theme = {
+export default {
   COLORS: {
     GRAY_100: '#1B1D1E',
     GRAY_200: '#333638',
