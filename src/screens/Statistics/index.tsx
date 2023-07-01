@@ -1,33 +1,35 @@
-import { HeaderPercent } from '@components/HeaderPercent';
-
-import { Column, Container, Content, GridRow, Title } from "./styles";
-import { StatisticsCard } from '@components/StatisticsCard';
+import { useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 
+import { HeaderPercent } from '@components/HeaderPercent';
+import { StatisticsCard } from '@components/StatisticsCard';
+import { Statitics } from '@screens/Home';
+
+import { Column, Container, Content, GridRow, Title } from "./styles";
+
 export function Statistics() {
-
-  let percentage = 30.21;
-
   const { COLORS } = useTheme();
+
+  const { bestSequencyOnDiet, totalNotDiet, totalOnDiet, totalRegistred, percentOnDiet } = useRoute().params as Statitics;
 
   return (
     <Container>
-      <HeaderPercent percentage={percentage} />
+      <HeaderPercent percentage={percentOnDiet} />
 
       <Content>
 
         <Title>Estatísticas gerais</Title>
 
-        <StatisticsCard title='22' description='melhor sequência de pratos dentro da dieta' />
-        <StatisticsCard title='109' description='refeições registradas' />
+        <StatisticsCard title={`${bestSequencyOnDiet}`} description='melhor sequência de pratos dentro da dieta' />
+        <StatisticsCard title={`${totalRegistred}`} description='refeições registradas' />
 
         <GridRow>
           <Column>
-            <StatisticsCard title='99' description='refeições dentro da dieta' backgroundColor={COLORS.GREEN_LIGHT} />
+            <StatisticsCard title={`${totalOnDiet}`} description='refeições dentro da dieta' backgroundColor={COLORS.GREEN_LIGHT} />
           </Column>
 
           <Column>
-            <StatisticsCard title='10' description='refeições fora da dieta' backgroundColor={COLORS.RED_LIGHT} />
+            <StatisticsCard title={`${totalNotDiet}`} description='refeições fora da dieta' backgroundColor={COLORS.RED_LIGHT} />
           </Column>
         </GridRow>
 
