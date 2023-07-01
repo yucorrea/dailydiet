@@ -13,6 +13,12 @@
       "@screens/*": [
         "./src/screens/*"
       ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@storage/*": [
+        "./src/storage/*"
+      ],
     }
   }
 }
