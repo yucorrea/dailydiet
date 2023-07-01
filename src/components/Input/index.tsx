@@ -1,4 +1,4 @@
-import { TextInputProps, StyleProp, TextInput } from "react-native";
+import { TextInputProps } from "react-native";
 import { Wrapper, Container, Label } from "./styles";
 
 type Props = TextInputProps & {
@@ -11,7 +11,7 @@ export function Input({ label, ...rest }: Props) {
     <Wrapper >
       <Label>{label}</Label>
 
-      <Container  {...rest} />
+      <Container {...rest} />
     </Wrapper>
   );
 }

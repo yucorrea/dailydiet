@@ -1,13 +1,14 @@
 import { TouchableOpacityProps } from "react-native";
-import { Container, Title, SubTitle, Icon, PercentageStyleProps } from "./styles";
 import { useTheme } from "styled-components/native";
+
+import { Container, Title, SubTitle, Icon, PercentageStyleProps } from "./styles";
 
 type Props = TouchableOpacityProps & PercentageStyleProps
 
 export function PercentCard({ percentage, ...rest }: Props) {
   const { COLORS } = useTheme();
 
-  const percentageFormated = percentage.toString().replace(".", ",");
+  const percentageFormated = percentage?.toString().replace(".", ",");
 
 
   return (

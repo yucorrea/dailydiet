@@ -2,11 +2,11 @@ import styled from 'styled-components/native';
 import { css } from 'styled-components/native';
 
 export type StatusStyleProps = {
-  type: 'in' | 'out'
+  type: boolean;
 }
 
 export type CheckButtonStyleProps = StatusStyleProps & {
-  selected?: string;
+  selected: boolean | null;
 }
 
 export const Container = styled.TouchableOpacity<CheckButtonStyleProps>`
@@ -22,8 +22,8 @@ export const Container = styled.TouchableOpacity<CheckButtonStyleProps>`
   border-radius: 6px;
 
   ${({ theme, type, selected }) => type === selected && css`
-    background-color: ${selected === 'in' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
-    border: 1px solid ${selected === 'in' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    background-color: ${selected ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+    border: 1px solid ${selected ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
   `}
 `;
 
@@ -43,6 +43,6 @@ export const Status = styled.View<StatusStyleProps>`
   border-radius: 7px;
 
   ${({ theme, type }) => css`
-    background-color: ${type === 'in' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    background-color: ${type ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
   `}
 `;

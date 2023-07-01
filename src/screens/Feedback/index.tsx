@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import success from '@assets/images/success.png';
 import fail from '@assets/images/fail.png';
@@ -25,24 +25,23 @@ export function Feedback() {
 
   const navigation = useNavigation();
 
+  const { onDiet } = useRoute().params as { onDiet: boolean }
 
   function handleToInitialScreen() {
     navigation.navigate('home')
   }
-
-  const status = 'in';
 
 
   return (
     <Container>
 
       <FeedbackHighlight>
-        <Title status={status}>{feedback[status].title}</Title>
-        <Description>{feedback[status].description}</Description>
+        <Title onDiet={onDiet}>{feedback[onDiet ? 'in' : 'out'].title}</Title>
+        <Description>{feedback[onDiet ? 'in' : 'out'].description}</Description>
       </FeedbackHighlight>
 
 
-      <Logo source={feedback[status].logo} />
+      <Logo source={feedback[onDiet ? 'in' : 'out'].logo} />
 
       <Button title="Ir para a página inicial" onPress={handleToInitialScreen} style={{ width: 190 }} />
 

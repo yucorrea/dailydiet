@@ -1,46 +1,70 @@
+import { useState } from 'react';
+import { Alert } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+import { Meal } from '@storage/meal/types/MealDTO';
+
 import { Header } from '@components/Header';
 import { Button } from "@components/Button";
 import { Highlight } from '@components/Hightlight';
 import { useTheme } from 'styled-components/native';
 import { PillStatus } from '@components/PillStatus';
 
-import { Container, Content, Footer, } from "./styles";
-import { useNavigation } from '@react-navigation/native';
+import { Container, Content, Footer } from "./styles";
+import { Modal } from '@components/Modal';
+import { mealDelete } from '@storage/meal/mealDelete';
+import { AppError } from '@utils/AppError';
 
 export function MealDetails() {
+  const [modalDelete, setModalDelete] = useState(false);
   const { COLORS } = useTheme();
 
-  const status = 'in'
-
   const navigation = useNavigation();
+  const params = useRoute().params as Meal;
 
-  function handleDeleteMeal() {
-    navigation.navigate('feedback', { status: 'out' });
+  const { onDiet, date, hour, name, description } = params;
+
+  async function handleDeleteMeal() {
+    try {
+      setModalDelete(false);
+
+      if (params.id) {
+        await mealDelete(params.id);
+
+        navigation.navigate('home');
+      }
+    } catch (error) {
+      if (error instanceof AppError) {
+        Alert.alert('Refeição', error.message);
+      }
+
+      console.log(error)
+    }
   }
 
 
   function handleEditMeal() {
-    navigation.navigate('meal');
+    navigation.navigate('newMeal', params);
   }
 
   return (
     <Container>
-      <Header title="Refeição" backgroundColor={status === 'in' ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT} />
+      <Header title="Refeição" backgroundColor={onDiet ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT} />
 
       <Content contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
 
         <Highlight
-          title='X-tudo'
-          description='Xis completo da lancheria do bairro'
+          title={name}
+          description={description}
         />
 
         <Highlight
           title='Data e hora'
-          description='12/08/2022 às 20:00'
+          description={`${date.replaceAll(".", "/")} às ${hour}`}
           fontSizeTitle='small'
         />
 
-        <PillStatus status='in' style={{ marginTop: 24 }} />
+        <PillStatus onDiet={onDiet} style={{ marginTop: 24 }} />
         <Footer>
 
           <Button
@@ -53,11 +77,23 @@ export function MealDetails() {
             type='outline'
             icon='trash'
             style={{ marginTop: 12 }}
-            onPress={handleDeleteMeal}
+            onPress={() => setModalDelete(true)}
           />
         </Footer>
       </Content>
 
+
+      <Modal
+        visible={modalDelete}
+        title='Deseja realmente excluir o registro da refeição?'
+        transparent
+        statusBarTranslucent
+        onCancelText='Cancelar'
+        onConfirmText='Sim, excluir'
+        onConfirm={handleDeleteMeal}
+        onCancel={() => setModalDelete(false)}
+        animationType='fade'
+      />
 
     </Container>
   );

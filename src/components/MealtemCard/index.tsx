@@ -6,7 +6,8 @@ type Props = TouchableOpacityProps & StatusStyledProps & {
   hour: string;
 }
 
-export function MealItemCard({ title, hour, status, ...rest }: Props) {
+export function MealItemCard({ title, hour, onDiet, ...rest }: Props) {
+
 
   return (
     <Container {...rest} >
@@ -15,7 +16,7 @@ export function MealItemCard({ title, hour, status, ...rest }: Props) {
       <Divider />
 
       <MealTitle>{title}</MealTitle>
-      <Status status={status} />
+      <Status onDiet={onDiet} />
     </Container>
   );
 }

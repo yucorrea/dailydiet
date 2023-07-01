@@ -1,7 +1,8 @@
 import { ViewProps } from 'react-native';
 import styled, { css } from 'styled-components/native';
+
 export type PillStatusStyledProps = ViewProps & {
-  status: string;
+  onDiet: boolean;
 }
 
 export const Container = styled.View`
@@ -30,8 +31,8 @@ export const Status = styled.View<PillStatusStyledProps>`
   border-radius: 7px;
   margin-right: 8px;
 
-  ${({ theme, status }) => css`
-    background-color: ${status === 'out' ? theme.COLORS.RED_MID : theme.COLORS.GREEN_MID};
+  ${({ theme, onDiet }) => css`
+    background-color: ${onDiet ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
   `}
 `;
 

@@ -2,7 +2,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
 export type HighlightStyleProps = {
-  status: 'in' | 'out'
+  onDiet: boolean;
 };
 
 
@@ -25,7 +25,7 @@ export const FeedbackHighlight = styled.View`
 export const Title = styled.Text<HighlightStyleProps>`
   font-size: ${({ theme, }) => theme.FONT_SIZE.XL}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  color: ${({ theme, status }) => status === 'in' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+  color: ${({ theme, onDiet }) => onDiet ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
   margin-bottom: 8px;
 `;
 

@@ -1,6 +1,7 @@
 import { TouchableOpacityProps, TouchableOpacity } from "react-native";
-import { Icon } from "./styles";
 import { IconProps } from 'phosphor-react-native';
+
+import { Icon } from "./styles";
 
 type Props = IconProps & TouchableOpacityProps & {
   onPress: () => void;
